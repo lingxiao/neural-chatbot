@@ -86,3 +86,68 @@ def sentence_to_token_ids(sentence, vocab, tokenizer = None, normalize_digits = 
 	# Normalize digits by 0 before looking words up in the vocab
 	return [vocab.get(_DIGIT_RE.sub(b"0",w), UNK_ID) for w in words]
 
+def refine_words(sentence_ids, w2idx, idx2w):
+	negatives = ['haven','hasn','hadn','wouldn','shouldn','mustn','couldn','didn','don','doesn','isn','aren','wasn','weren']
+	# there is no am and have
+	for i in xrange(len(sentence_ids)-1):
+		if sentence_ids[i] == w2idx['i'] and sentence_ids[i+1] == w2idx['m']:
+			sentence_ids[i+1] = w2idx['am']
+		elif sentence_ids[i] in [w2idx['you'],w2idx['we'],w2idx['they']] and sentence_ids[i+1] == w2idx['re']:
+			sentence_ids[i+1] = w2idx['are']
+		elif sentence_ids[i] in [w2idx['i'],w2idx['you'],w2idx['we'],w2idx['they']] and sentence_ids[i+1] == w2idx['ve']:
+			sentence_ids[i+1] = w2idx['have']
+		elif sentence_ids[i] in [w2idx['i'],w2idx['you'], w2idx['he'], w2idx['she'], w2idx['it'], w2idx['we'],w2idx['they']] and sentence_ids[i+1] == w2idx['d']:
+			sentence_ids[i+1] = w2idx['would']
+		elif sentence_ids[i] ==w2idx['won'] and sentence_ids[i+1] == w2idx['t']:
+			sentence_ids[i] == w2idx['will']
+			sentence_ids[i+1] = w2idx['not']
+		elif sentence_ids[i] ==w2idx['can'] and sentence_ids[i+1] == w2idx['t']:
+			sentence_ids[i+1] = w2idx['not']
+		elif sentence_ids[i] ==w2idx['what'] and sentence_ids[i+1] == w2idx['s']:
+			sentence_ids[i+1] = w2idx['is']
+		elif sentence_ids[i] ==w2idx['il'] or sentence_ids[i] ==w2idx['ll'] :
+			sentence_ids[i] = w2idx['will']
+		elif sentence_ids[i] == w2idx['gonna']:
+			sentence_ids = sentence_ids[:i]+[w2idx['going'],w2idx['to']] + sentence_ids[i+1:]
+		elif sentence_ids[i] == w2idx['wanna']:
+			sentence_ids = sentence_ids[:i]+[w2idx['want'],w2idx['to']] + sentence_ids[i+1:]
+		elif idx2w[sentence_ids[i]] in negatives and sentence_ids[i+1] == w2idx['t']:
+			sentence_ids[i] = w2idx[idx2w[sentence_ids[i]].split('n')[0]]
+			sentence_ids[i+1] = w2idx['not']
+	
+	return sentence_ids
+	"""
+	i m = i am
+	you/we/they re = you/we/they are
+	I/you/we/they ve = I/you/we/they have
+	can t = cannot
+	il = will
+	ll = will
+	gonna = going to
+	wanna = want to
+	haven t = have not
+	hadn t = had not
+	hasn t = has not
+	wouldn t = would not
+	shouldn t = should not
+	couldn t = could not 
+	mustn t = must not
+	won t = will not
+	didn t = did not
+	don t = do not
+	i/you/he/she/we/they/it d = i/you/he/she/we/they would (can be 'had' though)
+	isn t = is not
+	aren t = are not
+	weren t = were not
+	wasn t = was not
+	what s = what is 
+	doesn t = does not
+	"""
+
+
+
+
+
+
+
+

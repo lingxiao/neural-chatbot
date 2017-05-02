@@ -36,7 +36,7 @@ tf.app.flags.DEFINE_string("data_dir", "/tmp", "Data directory")
 tf.app.flags.DEFINE_string("train_dir", "/tmp", "Training directory.")
 tf.app.flags.DEFINE_integer("max_train_data_size", 0,
                             "Limit on the size of training data (0: no limit).")
-tf.app.flags.DEFINE_integer("steps_per_checkpoint", 200,
+tf.app.flags.DEFINE_integer("steps_per_checkpoint", 1000,
                             "How many training steps to do per checkpoint.")
 tf.app.flags.DEFINE_boolean("decode", False,
                             "Set to True for interactive decoding.")
@@ -73,11 +73,11 @@ else:
 
 def read_data(data_path, max_size = None):
 	data_set = [[] for _ in _buckets]
+	w2idx =  pickle.load(open(os.path.join(FLAGS.data_dir,"w2idx.pkl"),"rb"))
+	idx2w =  pickle.load(open(os.path.join(FLAGS.data_dir,"idx2w.pkl"),"rb"))
 
 	for f_name in os.listdir(data_path):
 		dialogue = np.ndarray.tolist(np.load(os.path.join(data_path, f_name)))
-		#dialogue = BOC + dialogue
-		print("======== reading data ======== file: "+f_name)
 		for k in xrange(len(dialogue)-2):
 			"""
 			HERE FOR REMOVING BAD TOKENS
@@ -108,7 +108,9 @@ def read_data(data_path, max_size = None):
 						target_ids.append(dialogue[k+2][i])
 			"""
 			source_ids = [x for x in dialogue[k] if not(x in util.removing_ids)] + [x for x in dialogue[k+1] if not(x in util.removing_ids)]
+			source_ids = util.refine_words(source_ids, w2idx, idx2w)
 			target_ids = [x for x in dialogue[k+2] if not(x in util.removing_ids)]
+			target_ids = util.refine_words(target_ids, w2idx, idx2w)
 			target_ids.append(util.EOS_ID)
 
 			for bucket_id, (source_size, target_size) in enumerate(_buckets):
@@ -135,23 +137,31 @@ def read_data_backward(data_path, max_size = None):
 	return data_set
 
 def create_model(session, forward_only):
-  """Create translation model and initialize or load parameters in session.
-  If there is any problem on checkpoint, see "tensorflow/contrib/framework/python/framework/checkpoint_util.py"
+	"""Create translation model and initialize or load parameters in session.
+	If there is any problem on checkpoint, see "tensorflow/contrib/framework/python/framework/checkpoint_util.py"
 
 	"""
-  model = s2s_mdl.Seq2SeqModel(
-      FLAGS.vocab_size, _buckets,
-      FLAGS.layer_size, FLAGS.num_layers, FLAGS.max_gradient_norm, FLAGS.batch_size,
-      FLAGS.learning_rate, FLAGS.learning_rate_decay_factor, forward_only=forward_only)
+	if FLAGS.backward:
+		model = s2s_mdl.Seq2SeqModel(
+	      FLAGS.vocab_size, _buckets,
+	      FLAGS.layer_size, FLAGS.num_layers, FLAGS.max_gradient_norm, FLAGS.batch_size,
+	      FLAGS.learning_rate, FLAGS.learning_rate_decay_factor, forward_only=forward_only)
+	else:
+		with tf.variable_scope("forward"):
+			model = s2s_mdl.Seq2SeqModel(
+	      FLAGS.vocab_size, _buckets,
+	      FLAGS.layer_size, FLAGS.num_layers, FLAGS.max_gradient_norm, FLAGS.batch_size,
+	      FLAGS.learning_rate, FLAGS.learning_rate_decay_factor, forward_only=forward_only)
 
-  ckpt = tf.train.get_checkpoint_state(FLAGS.train_dir)
-  if FLAGS.decode:
-    print("Reading model parameters from %s" % ckpt.model_checkpoint_path)
-    model.saver.restore(session, ckpt.model_checkpoint_path)
-  else:
-    print("Created model with fresh parameters.")
-    session.run(tf.global_variables_initializer())
-  return model
+	  
+	if FLAGS.decode:
+		ckpt = tf.train.get_checkpoint_state(FLAGS.train_dir)
+		print("Reading model parameters from %s" % ckpt.model_checkpoint_path)
+		model.saver.restore(session, ckpt.model_checkpoint_path)
+	else:
+		print("Created model with fresh parameters.")
+		session.run(tf.global_variables_initializer())
+	return model
 
 
 def train():
@@ -229,7 +239,10 @@ def decode():
 
 		sys.stdout.write("> ")
 		sys.stdout.flush()
-		prev_ids = BOC[0]
+		if FLAGS.backward:
+			prev_ids = []
+		else:
+			prev_ids = BOC[0]
 		sentence = sys.stdin.readline()
 
 		while sentence:
@@ -247,7 +260,10 @@ def decode():
 			print(" ".join([tf.compat.as_str(idx2w[output]) for output in outputs]))
 			print("> ", end="")
 			sys.stdout.flush()
-			prev_ids = outputs
+			if FLAGS.backward:
+				prev_ids = []
+			else:
+				prev_ids = outputs
 			sentence = sys.stdin.readline()
 
 

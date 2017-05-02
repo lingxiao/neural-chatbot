@@ -24,7 +24,7 @@ from tensorflow.contrib.rnn.python.ops import core_rnn_cell
 class Seq2SeqModel(object):
 	def __init__(self, vocab_size, buckets, layer_size, num_layers, 
 		max_gradient_norm, batch_size, learning_rate, learning_rate_decay_factor, 
-		use_lstm=False, num_samples=512, forward_only = False, dtype= tf.float32):
+		use_lstm=False, num_samples=512, MI_use = False, forward_only = False, dtype= tf.float32):
 
 		"""Create a Model:
 		Similar to the seq2seq_model.py code in the tensorflow version 0.12.1
@@ -81,6 +81,7 @@ class Seq2SeqModel(object):
                 num_classes=self.vocab_size),dtype)
 
 	  	softmax_loss_function = sampled_loss
+	  	self.softmax_loss_function = softmax_loss_function
 
 			# Create the internal multi-layer cell for our RNN.
 		if use_lstm:
@@ -95,8 +96,10 @@ class Seq2SeqModel(object):
 
 		# The seq2seq function: we use embedding for the input and attention.
 		def seq2seq_f(encoder_inputs, decoder_inputs, do_decode):
-			return tf.contrib.legacy_seq2seq.embedding_attention_seq2seq(encoder_inputs, decoder_inputs, cell, num_encoder_symbols = vocab_size, num_decoder_symbols=vocab_size, embedding_size = layer_size, output_projection = output_projection, feed_previous = do_decode, dtype = dtype)
-
+			return tf.contrib.legacy_seq2seq.embedding_attention_seq2seq(encoder_inputs, decoder_inputs,
+			 cell, num_encoder_symbols = vocab_size, num_decoder_symbols=vocab_size, embedding_size = layer_size, 
+			 output_projection = output_projection, feed_previous = do_decode, dtype = dtype)
+		self.seq2seq_f = seq2seq_f
 		# Feeds for inputs.
 		self.encoder_inputs = []
 		self.decoder_inputs = []
@@ -132,7 +135,11 @@ class Seq2SeqModel(object):
 				self.gradient_norms.append(global_norm)
 				self.updates.append(opt.apply_gradients(zip(clipped_gradients, params), global_step=self.global_step)) #An Operation that applies the specified gradients. If global_step was not None, that operation also increments global_step.
 
-		self.saver = tf.train.Saver(tf.global_variables())
+		if MI_use:
+			self.names = {str(x.name).split(":0")[0] : x for x in tf.global_variables() if 'forward' in str(x.name).split("/")}
+			self.saver = tf.train.Saver(self.names)
+		else:
+			self.saver = tf.train.Saver(tf.global_variables())
 
 	def step(self, session, encoder_inputs, decoder_inputs, target_weights, bucket_id, forward_only):
 		
@@ -212,7 +219,7 @@ class Seq2SeqModel(object):
 		encoder_size, decoder_size = self.buckets[bucket_id]
 		encoder_inputs, decoder_inputs = [],[]
 		"""
-    	1) Get a random batch of encoder and decoder inputs from data, 
+    1) Get a random batch of encoder and decoder inputs from data, 
 		2) Pad them if needed, reverse encoder inputs and 
 		3) Add Go to decoder
 
@@ -245,7 +252,7 @@ class Seq2SeqModel(object):
 					batch_weight[batch_idx] = 0.0
 
 			batch_weights.append(batch_weight)
-		#pdb.set_trace()
+		pdb.set_trace()
 		return batch_encoder_inputs, batch_decoder_inputs, batch_weights
 
 
