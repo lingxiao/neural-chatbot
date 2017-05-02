@@ -7,7 +7,6 @@ import subprocess
 import cPickle
 import math
 
-from app import *
 tf.logging.set_verbosity(tf.logging.DEBUG) # test
 
 from models.ts_hred.src.hred.train import Trainer
