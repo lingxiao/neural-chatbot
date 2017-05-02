@@ -36,7 +36,7 @@ embedding_dim = 64
 query_dim     = 128
 session_dim   = 256
 batch_size    = 50
-max_length    = 50
+max_length    = 500
 
 if __name__ == '__main__':
 
@@ -57,6 +57,7 @@ if __name__ == '__main__':
 	            , MAX_LENGTH    = max_length
 	            
 	            , VOCAB_SIZE = vocab_size
+
 	            , EOQ_SYMBOL = eoq_symbol
 	            , EOS_SYMBOL = eos_symbol
 	            , UNK_SYMBOL = unk_symbol

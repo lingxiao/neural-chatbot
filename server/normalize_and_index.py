@@ -107,25 +107,38 @@ def normalize_and_index( RESERVED_TOKENS
     '''
         make big concactenated version and split
         into 80 percent train and 20 percent validate
+
+        construct index version of all sessions
+        movie conversation:
+    '''
+    sessions_idx = []
+
+    for session in sessions:
+
+        sess_idx = []
+
+        for _, utter in session:
+            idx = encode( w2idx, RESERVED_TOKENS['unk'], utter)
+            idx.append  ( w2idx [RESERVED_TOKENS['eos']]      )
+            sess_idx.append(idx)
+
+        sess_idx = join(sess_idx) + [w2idx[RESERVED_TOKENS['eoc']]]
+
+        sessions_idx.append(sess_idx)
+
+    cut        = int(float(len(sessions_idx))*0.8)
+    train_idxs = sessions_idx[ 0:cut ]
+    test_idxs  = sessions_idx[ cut:  ]
+
+
+    '''
+        make big concactenated version and split
+        into 80 percent train and 20 percent validate
     '''
     writer.tell('constructing a version containing the concactenation of all sessions')
-    big   = join([xs for _,xs in sess] for sess in sessions)
-    cut   = int(float(len(big))*0.8)
-    train = big[0:cut]
-    test  = big[cut:]
 
-    '''
-        construct index version of all sessions
-    '''
-    writer.tell('encoding all sessions')
-    sessions_idx = [[encode(w2idx, RESERVED_TOKENS['unk'], ws) \
-                    for _,ws in sess] for sess in sessions] 
-
-
-    big_idxs   = join(sessions_idx)
-    train_idxs = big_idxs[0:cut]
-    test_idxs  = big_idxs[cut:]
-
+    train = sessions[0:cut]
+    test  = sessions[cut:]
 
     '''
         remove existing files
@@ -163,20 +176,20 @@ def normalize_and_index( RESERVED_TOKENS
     writer.tell('saving all concactenated files')       
 
     train_path = os.path.join(sess_concat_dir, 'train')
-    test_path  = os.path.join(sess_concat_dir, 'test')
+    valid_path = os.path.join(sess_concat_dir, 'valid')
 
-    with open(train_path + '.txt','w') as h:
-        for xs in train:
-            h.write(xs + '\n')
+    # with open(train_path + '.txt','w') as h:
+    #     for xs in train:
+    #         h.write(xs + '\n')
 
-    with open(test_path + '.txt','w') as h:
-        for xs in test:
-            h.write(xs + '\n')
+    # with open(valid_path + '.txt','w') as h:
+    #     for xs in test:
+    #         h.write(xs + '\n')
 
     with open(train_path + '.pkl','wb') as h:
         pickle.dump(train_idxs,h)
 
-    with open(test_path + '.pkl','wb') as h:
+    with open(valid_path + '.pkl','wb') as h:
         pickle.dump(test_idxs,h)
 
 
@@ -271,7 +284,8 @@ def normalize_utterance(token, RESERVED_TOKENS, rs):
     ts = token.tokenize(ts)
     ys = ' '.join(ts)
     ys = ys.encode('utf-8')
-    return ys.strip() + ' ' + RESERVED_TOKENS['eos']
+    return ys.strip()
+     # + ' ' + RESERVED_TOKENS['eos']
 
 ############################################################
 '''

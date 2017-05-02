@@ -7,7 +7,12 @@ import os
 import logging as logger
 
 
-def read_batch(data_file, batch_size=80, eoq_symbol=1, pad_symbol=2, max_seq_len=50):
+def read_batch( data_file
+              , batch_size  = 80
+              , eoq_symbol  = 1
+              , pad_symbol  = 2
+              , max_seq_len = 50 ):
+
     batch = ([], [])
 
     from sys import platform

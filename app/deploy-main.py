@@ -61,11 +61,11 @@ def main_movie(dev = False):
 
 	print('\n>> Running main_movie in '+ suffix + ' mode ...')
 
-	zip_root = config.get_path('movie/zip')
-	raw_root = config.get_path('movie/raw')
-	out_root = config.get_path('movie/sess-normed' + suffix)
+	zip_root = config.get_path( 'movie/zip' )
+	raw_root = config.get_path( 'movie/raw' )
+	out_root = config.get_path( 'movie/sess-normed' + suffix )
 
-	extract_movie   (zip_root = zip_root, raw_root = raw_root)
+	# extract_movie   (zip_root = zip_root, raw_root = raw_root)
 	preprocess_movie(raw_root = raw_root, out_root = out_root)
 
 	normalize_and_index( RESERVED_TOKENS
@@ -77,8 +77,23 @@ def main_movie(dev = False):
 	                    , max_len    = 400
 	                    , vocab_size = 50000)
 
-main_phone()
+main_movie()
 
-with open(config.get_path('phone/idx2w'),'rb') as h:
-	x = pickle.load(h)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

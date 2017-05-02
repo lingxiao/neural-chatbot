@@ -50,21 +50,21 @@ if __name__ == '__main__':
 	            , VALID_FILE      = valid_file
 	            , LOGS_DIR        = logs_dir
 	            
-	            , EMBEDDING_DIM = embedding_dim
-	            , SESSION_DIM   = session_dim
-	            , QUERY_DIM     = query_dim
-	            , BATCH_SIZE    = batch_size
-	            , MAX_LENGTH    = max_length
+	            , EMBEDDING_DIM   = embedding_dim
+	            , SESSION_DIM     = session_dim
+	            , QUERY_DIM       = query_dim
+	            , BATCH_SIZE      = batch_size
+	            , MAX_LENGTH      = max_length
 	            
-	            , VOCAB_SIZE = vocab_size
-	            , EOQ_SYMBOL = eoq_symbol
-	            , EOS_SYMBOL = eos_symbol
-	            , UNK_SYMBOL = unk_symbol
+	            , VOCAB_SIZE      = vocab_size
+	            , EOQ_SYMBOL      = eoq_symbol
+	            , EOS_SYMBOL      = eos_symbol
+	            , UNK_SYMBOL      = unk_symbol
 
-	            , N_BUCKETS  = n_buckets
-	            , MAX_ITTER  = max_itter
+	            , N_BUCKETS       = n_buckets
+	            , MAX_ITTER       = max_itter
 
-	            , RESTORE    = False)
+	            , RESTORE         = True)
 
 	    trainer.train(batch_size=batch_size, max_length=max_length)
 

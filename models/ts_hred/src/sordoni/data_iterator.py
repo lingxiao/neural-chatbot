@@ -13,10 +13,10 @@ logger = logging.getLogger(__name__)
 
 def create_padded_batch(state, x, y=None):
     mx = state['seqlen']
-    n = state['bs'] 
+    n  = state['bs'] 
     
-    X = numpy.zeros((mx, n), dtype='int32')
-    Y = numpy.zeros((mx, n), dtype='int32')
+    X     = numpy.zeros((mx, n), dtype='int32')
+    Y     = numpy.zeros((mx, n), dtype='int32')
     Xmask = numpy.zeros((mx, n), dtype='float32') 
 
     # Fill X and Xmask
@@ -68,11 +68,14 @@ def get_batch_iterator(rng, state):
             self.batch_iter = None
     
         def get_homogenous_batch_iter(self):
+
             while True:
-                k_batches = state['sort_k_batches']
+
+                k_batches  = state['sort_k_batches']
                 batch_size = state['bs']
                
                 data = []
+
                 for k in range(k_batches):
                     batch = SSIterator.next(self)
                     if batch:
@@ -82,12 +85,13 @@ def get_batch_iterator(rng, state):
                     return
                 
                 sessions = data
+
                 if self.has_ranks:
                     sessions, ranks = zip(*data)
                     y = numpy.asarray(list(itertools.chain(*ranks)))
 
-                x = numpy.asarray(list(itertools.chain(*sessions)))
-                lens = numpy.asarray([map(len, x)])
+                x     = numpy.asarray(list(itertools.chain(*sessions)))
+                lens  = numpy.asarray([map(len, x)])
                 order = numpy.argsort(lens.max(axis=0))
                 
                 for k in range(len(data)):
@@ -113,19 +117,19 @@ def get_batch_iterator(rng, state):
             return batch
 
     train_data = Iterator(
-        batch_size=int(state['bs']),
-        session_file=state['train_session'],
-        rank_file=state.get('train_rank', None),
-        queue_size=100,
-        use_infinite_loop=True,
+        batch_size        = int(state['bs']),
+        session_file      = state['train_session'],
+        rank_file         = state.get('train_rank', None),
+        queue_size        = 100,
+        use_infinite_loop = True,
         max_len=state['seqlen']) 
      
     valid_data = Iterator(
-        batch_size=int(state['bs']),
-        session_file=state['valid_session'],
-        rank_file=state.get('valid_rank', None),
-        use_infinite_loop=True,
-        queue_size=100,
-        max_len=state['seqlen'])
+        batch_size         = int(state['bs']),
+        session_file       = state['valid_session'],
+        rank_file          = state.get('valid_rank', None),
+        use_infinite_loop  = True,
+        queue_size         = 100,
+        max_len            = state['seqlen'])
     
     return train_data, valid_data

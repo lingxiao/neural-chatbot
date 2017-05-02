@@ -13,12 +13,15 @@ logger = logging.getLogger(__name__)
 
 
 class SSFetcher(threading.Thread):
+  
     def __init__(self, parent):
+
         threading.Thread.__init__(self)
         self.parent = parent
         self.indexes = np.arange(parent.data_len)
 
     def run(self):
+    
         diter = self.parent
         self.parent.rng.shuffle(self.indexes)
         
@@ -64,16 +67,16 @@ class SSFetcher(threading.Thread):
                 return
 
 class SSIterator(object):
-    def __init__(self,
-                 rng,
-                 batch_size,
+    def __init__(self             ,
+                 rng              ,
+                 batch_size       ,
                  session_file=None,
-                 rank_file=None,
-                 dtype="int32",
-                 can_fit=False,
-                 queue_size=100,
-                 cache_size=100,
-                 shuffle=True,
+                 rank_file=None   ,
+                 dtype="int32"    ,
+                 can_fit=False    ,
+                 queue_size=100   ,
+                 cache_size=100   ,
+                 shuffle=True     ,
                  use_infinite_loop=True,
                  max_len=1000):
 
@@ -85,7 +88,7 @@ class SSIterator(object):
         self.exit_flag = False
 
     def load_files(self):
-        self.data = cPickle.load(open(self.session_file, 'r'))
+        self.data     = cPickle.load(open(self.session_file, 'r'))
         self.data_len = len(self.data)
         logger.debug('Data len is %d' % self.data_len) 
         

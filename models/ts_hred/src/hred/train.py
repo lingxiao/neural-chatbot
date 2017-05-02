@@ -59,6 +59,7 @@ class Trainer(object):
         self.vocab_lookup_dict = cPickle.load(open(idx2w_file,'rb'))
 
         self.train_data, self.valid_data = sordoni_data_iterator.get_batch_iterator(np.random.RandomState(SEED), {
+
             'eoq_sym'       : EOQ_SYMBOL ,
             'eos_sym'       : EOS_SYMBOL ,
             'sort_k_batches': N_BUCKETS  ,
