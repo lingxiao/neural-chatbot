@@ -7,27 +7,29 @@ import subprocess
 import cPickle
 import math
 
-from app import *
 tf.logging.set_verbosity(tf.logging.DEBUG) # test
 
 from models.ts_hred.src.hred.train import Trainer
 
+input_dir       = '/data2/xiao/neural-chatbot-inputs'
+chkpt_dir       = '/data2/xiao/neural-chatbot-checkpoint'
+
 root            = '/home/lingxiao/neural-chatbot/model/hred'
-data_root       = get_path('movie/sess-concat')
-chkpt_root      = get_path('checkpoint'       )
+data_root       = input_dir + '/movie/sess-concat'
+chkpt_root      = '/data2/xiao/neural-chatbot-checkpoint'
 
 logs_dir        = os.path.join(root       , 'logs'     )
 checkpoint_file = os.path.join(chkpt_root , 'hred/hred-movie.ckpt')
 train_file      = os.path.join(data_root  , 'train.pkl')
 valid_file      = os.path.join(data_root  , 'test.pkl' )
-idx2w_file      = get_path('movie/idx2w')
+idx2w_file      = '/data2/xiao/neural-chatbot-inputs/movie/idx2w.pkl'
 
-unk_symbol = 1
-eoq_symbol = 3    # end of sentence
-eos_symbol = 4    # end of conversation
+unk_symbol    = 1
+eoq_symbol    = 3    # end of sentence
+eos_symbol    = 4    # end of conversation
 
-n_buckets  = 20
-max_itter  = 10000000
+n_buckets     = 20
+max_itter     = 10000000
 
 vocab_size    = 50005
 embedding_dim = 64
@@ -62,7 +64,7 @@ if __name__ == '__main__':
 	            , N_BUCKETS  = n_buckets
 	            , MAX_ITTER  = max_itter
 
-	            , RESTORE    = True)
+	            , RESTORE    = False)
 
 	    trainer.train(batch_size=batch_size, max_length=max_length)
 
