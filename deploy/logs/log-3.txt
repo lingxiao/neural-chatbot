@@ -1,0 +1,15 @@
+
+	>> ========== in PRODUCTION mode ==========
+	>> running normalize_and_index
+	>> opening preprocessed sessions and normalizing ...
+	>> Scanning for directory for all files
+	>> found 28 total sessions
+	>> removing sessions that do not conform to maximum utterance length of 400
+	>> removed 0 sessions
+	>> building idx2w w2idx dictionary ...
+	>> constructing encoded sessions ...
+	>> constructing a version containing the concactenation of all sessions
+	>> removing existing .npy files
+	>> saving all 28 normalized sessions in .txt and .npy form ...
+	>> saving all concactenated files
+	>> saving w2idx and idx2w
