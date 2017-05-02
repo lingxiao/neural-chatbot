@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/heejinjeong/Desktop/Develop/Alexa/neural-chatbot/drl_dialog/checkpoints/seq2seq.ckpt-10"
+all_model_checkpoint_paths: "/Users/heejinjeong/Desktop/Develop/Alexa/neural-chatbot/drl_dialog/checkpoints/seq2seq.ckpt-10"

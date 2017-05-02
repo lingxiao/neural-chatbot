@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: paper.aux
+The style file: acl_natbib.bst
+Database file #1: paper.bib
+Warning--empty booktitle in Serban:15
+You've used 3 entries,
+            2936 wiz_defined-function locations,
+            609 strings with 5097 characters,
+and the built_in function-call counts, 1800 in all, are:
+= -- 145
+> -- 44
+< -- 4
++ -- 17
+- -- 12
+* -- 101
+:= -- 260
+add.period$ -- 14
+call.type$ -- 3
+change.case$ -- 23
+chr.to.int$ -- 3
+cite$ -- 4
+duplicate$ -- 155
+empty$ -- 175
+format.name$ -- 19
+if$ -- 385
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 27
+newline$ -- 20
+num.names$ -- 12
+pop$ -- 67
+preamble$ -- 1
+purify$ -- 16
+quote$ -- 0
+skip$ -- 67
+stack$ -- 0
+substring$ -- 75
+swap$ -- 66
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 27
+warning$ -- 1
+while$ -- 12
+width$ -- 0
+write$ -- 43
+(There was 1 warning)

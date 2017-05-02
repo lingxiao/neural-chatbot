@@ -1,0 +1,25 @@
+
+>> ========== in PRODUCTION mode ==========
+>> Initializing application [ neural-chatbot ] ...
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot/deploy/logs
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/sess-concat
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/dev/sess-idx
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/raw
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/sess-idx
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/w2idx.pkl
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/idx2w.pkl
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/zip
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/dev
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/dev/sess-normed
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/sess-normed
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/movie/dev/sess-concat
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-checkpoint/
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/phone-home/idx2w.pkl
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/phone-home/sess-concat
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/phone-home/raw
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/phone-home/sess-idx
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/phone-home/sess-normed
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data/phone-home/w2idx.pkl
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot-data
+>> path already exist at /Users/lingxiao/Documents/research/code/neural-chatbot/models/ts_hred
+>> complete application setup!
