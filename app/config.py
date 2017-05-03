@@ -47,6 +47,7 @@ elif root[0:5] == '/home':
 '''
 PATH = {# directories
         'log'         : os.path.join(root, 'deploy/logs')
+       ,'root'        : root
 
        ,'input'       : input_dir
        ,'checkpoint'  : chkpt_dir
@@ -61,7 +62,7 @@ PATH = {# directories
 	       ,'sess-concat'     : os.path.join(input_dir, 'movie/sess-concat' )
 
        	   ,'dev'             : os.path.join(input_dir, 'movie/dev'        )
-	       ,'sess-normed-dev' : os.path.join(input_dir, 'movie/dev/sess-normed')
+	       ,'sess-normed'     : os.path.join(input_dir, 'movie/dev/sess-normed')
 	       ,'sess-idx-dev'    : os.path.join(input_dir, 'movie/dev/sess-idx')
 	       ,'sess-concat-dev' : os.path.join(input_dir, 'movie/dev/sess-concat' )
 

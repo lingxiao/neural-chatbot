@@ -25,7 +25,7 @@ max_itter     = 10000000
 
 vocab_size    = 50005
 embedding_dim = 64
-session_dim   = 256
+session_dim   = 4
 batch_size    = 64
 query_dim     = 128
 max_length    = 220
@@ -46,31 +46,31 @@ idx2w_file      = get_path('movie/idx2w')
 
 ############################################################
 
-idx2w = cPickle.load(open(idx2w_file,'rb'))
+idx2w = cPickle.load( open(idx2w_file,'rb') )
 
 with open(valid_file,'rb') as h:
 	ws = pickle.load(h)
 
 SEED = 1234 
 
-# train, valid = sordoni_data_iterator.get_batch_iterator(np.random.RandomState(SEED), {
+train, valid = sordoni_data_iterator.get_batch_iterator(np.random.RandomState(SEED), {
 
-#     'eoq_sym'       : eoq_symbol ,
-#     'eos_sym'       : eos_symbol ,
-#     'sort_k_batches': n_buckets  ,
-#     'bs'            : batch_size ,
-#     'train_session' : train_file ,
-#     'seqlen'        : max_length ,
-#     'valid_session' : valid_file
-# })
+    'eoq_sym'       : eoq_symbol ,
+    'eos_sym'       : eos_symbol ,
+    'sort_k_batches': n_buckets  ,
+    'bs'            : 100        ,
+    'train_session' : train_file ,
+    'seqlen'        : 200        ,
+    'valid_session' : valid_file
+})
 
 
-# train.start()
+train.start()
 
-# data = train.next()
+data = train.next()
 
-# data_x = data['x']
-# data_y = data['y']
+data_x = data['x']
+data_y = data['y']
 
 
 

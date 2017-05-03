@@ -8,21 +8,28 @@ import cPickle
 import math
 
 tf.logging.set_verbosity(tf.logging.DEBUG) # test
-
 from models.ts_hred.src.hred.train import Trainer
 
-input_dir       = '/data2/xiao/neural-chatbot-inputs'
-chkpt_dir       = '/data2/xiao/neural-chatbot-checkpoint'
+from app import *
 
-root            = '/home/lingxiao/neural-chatbot/model/hred'
-data_root       = input_dir + '/movie/sess-concat'
-chkpt_root      = '/data2/xiao/neural-chatbot-checkpoint'
+# input_dir       = '/data2/xiao/neural-chatbot-inputs'
+# chkpt_dir       = '/data2/xiao/neural-chatbot-checkpoint'
+
+# root            = '/home/lingxiao/neural-chatbot/model/hred'
+# data_root       = input_dir + '/movie/sess-concat'
+# chkpt_root      = '/data2/xiao/neural-chatbot-checkpoint'
+
+
+root       = get_path('root')
+data_root  = get_path('input')
+chkpt_root = get_path('checkpoint')
 
 logs_dir        = os.path.join(root       , 'logs'     )
 checkpoint_file = os.path.join(chkpt_root , 'hred/hred-movie.ckpt')
-train_file      = os.path.join(data_root  , 'train.pkl')
-valid_file      = os.path.join(data_root  , 'test.pkl' )
-idx2w_file      = '/data2/xiao/neural-chatbot-inputs/movie/idx2w.pkl'
+train_file      = os.path.join(get_path('movie/sess-concat')  , 'train.pkl')
+valid_file      = os.path.join(get_path('movie/sess-concat')  , 'valid.pkl' )
+idx2w_file      = get_path('movie/idx2w')
+
 
 unk_symbol    = 1
 eoq_symbol    = 3    # end of sentence
@@ -65,7 +72,7 @@ if __name__ == '__main__':
 	            , N_BUCKETS  = n_buckets
 	            , MAX_ITTER  = max_itter
 
-	            , RESTORE    = True)
+	            , RESTORE    = False)
 
 	    trainer.train(batch_size=batch_size, max_length=max_length)
 
