@@ -54,15 +54,14 @@ with open(valid_file,'rb') as h:
 SEED = 1234 
 
 train, valid = sordoni_data_iterator.get_batch_iterator(np.random.RandomState(SEED), {
-
-    'eoq_sym'       : eoq_symbol ,
-    'eos_sym'       : eos_symbol ,
-    'sort_k_batches': n_buckets  ,
-    'bs'            : 100        ,
-    'train_session' : train_file ,
-    'seqlen'        : 200        ,
-    'valid_session' : valid_file
-})
+	    'eoq_sym'       : eoq_symbol ,
+	    'eos_sym'       : eos_symbol ,
+	    'sort_k_batches': n_buckets  ,
+	    'bs'            : 100        ,
+	    'train_session' : train_file ,
+	    'seqlen'        : 200        ,
+	    'valid_session' : valid_file
+	})
 
 
 train.start()
