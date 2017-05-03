@@ -32,13 +32,9 @@ if root[0:6] == '/Users':
 	input_dir = '/Users/lingxiao/Documents/research/code/neural-chatbot-data'
 	chkpt_dir = '/Users/lingxiao/Documents/research/code/neural-chatbot-checkpoint/'
 
-# nlp grid
-elif root[0:5] == '/mnt/':
-	data_root = '/nlp/users/xiao/dialogue'
-
 # tesla
 elif root[0:5] == '/home':
-	input_dir = '/data2/xiao/neural-chatbot-inputs'
+	input_dir = '/data2/xiao/neural-chatbot-data'
 	chkpt_dir = '/data2/xiao/neural-chatbot-checkpoint'
 
 ############################################################
