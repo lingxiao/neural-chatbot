@@ -34,7 +34,7 @@ max_itter     = 10000000
 embedding_dim = 64
 query_dim     = 128
 session_dim   = 256
-batch_size    = 25
+batch_size    = 24
 max_length    = 50
 
 vocab_size    = 50005
