@@ -74,7 +74,7 @@ def main_movie(dev = False):
 	                    , config.get_path('movie/sess-concat' + suffix)
 	                    , config.get_path('movie/w2idx'       + suffix)
 	                    , config.get_path('movie/idx2w'       + suffix)
-	                    , max_len    = 400
+	                    , max_len    = 50
 	                    , vocab_size = 50000)
 
 suffix = ''
@@ -85,10 +85,10 @@ sess_idx_dir    = config.get_path('movie/sess-idx'    + suffix)
 sess_concat_dir = config.get_path('movie/sess-concat' + suffix)
 w2idx_path      = config.get_path('movie/w2idx'       + suffix)
 idx2w_path      = config.get_path('movie/idx2w'       + suffix)
-max_len         = 400
+max_len         = 50
 vocab_size      = 50000
 
-def norm_and_index( RESERVED_TOKENS, input_dir, max_len = 100, vocab_size = 50000):
+def norm_and_index( RESERVED_TOKENS, input_dir, max_len = 50, vocab_size = 50000):
 
 	print('\n\t>> running normalize_and_index')
 	print('\n\t>> opening preprocessed sessions and normalizing ...')
@@ -166,7 +166,7 @@ def construct_session(sess, w2idx, RESERVED_TOKENS):
 
 preprocess_movie(raw_root = raw_root, out_root = out_root)
 
-w2idx, idx2w, sessions = norm_and_index(RESERVED_TOKENS, input_dir, max_len = 400, vocab_size = vocab_size )
+w2idx, idx2w, sessions = norm_and_index(RESERVED_TOKENS, input_dir, max_len = max_len, vocab_size = vocab_size )
 
 sessions_idx = encode_delimited(RESERVED_TOKENS, w2idx, idx2w)    
 sessions_idx = [construct_session(s, w2idx, RESERVED_TOKENS) for s in chunks( sessions_idx, 4 )]

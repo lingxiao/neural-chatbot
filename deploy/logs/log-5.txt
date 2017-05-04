@@ -1,0 +1,3 @@
+
+	>> ========== in PRODUCTION mode ==========
+	>> Scanning for directory for all files

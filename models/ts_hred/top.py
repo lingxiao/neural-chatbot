@@ -1,4 +1,5 @@
 """ File to build and train the entire computation graph in tensorflow
+https://github.com/tscheepers/hred-attention-tensorflow/blob/master/src/hred/train.py
 """
 import os
 import numpy as np
@@ -33,7 +34,7 @@ max_itter     = 10000000
 embedding_dim = 64
 query_dim     = 128
 session_dim   = 256
-batch_size    = 50
+batch_size    = 25
 max_length    = 50
 
 vocab_size    = 50005
