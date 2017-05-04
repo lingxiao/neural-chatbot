@@ -39,7 +39,7 @@ max_length    = 50
 
 vocab_size    = 50005
 
-	
+
 if __name__ == '__main__':
 
 	with tf.Graph().as_default():
@@ -67,7 +67,7 @@ if __name__ == '__main__':
 	            , N_BUCKETS  = n_buckets
 	            , MAX_ITTER  = max_itter
 
-	            , RESTORE    = False)
+	            , RESTORE    = True)
 
 	    trainer.train(batch_size=batch_size, max_length=max_length)
 
