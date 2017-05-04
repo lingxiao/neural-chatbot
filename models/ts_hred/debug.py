@@ -15,7 +15,6 @@ from models.ts_hred.src.hred.train import Trainer
 import models.ts_hred.src.sordoni.data_iterator as sordoni_data_iterator
 
 
-
 unk_symbol    = 1
 eoq_symbol    = 3    # end of sentence
 eos_symbol    = 4    # end of conversation

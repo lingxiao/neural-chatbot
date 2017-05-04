@@ -78,8 +78,8 @@ def main_movie(dev = False):
 	                    , vocab_size = 50000)
 
 suffix = ''
-raw_root        = config.get_path( 'movie/raw' )
-out_root        = config.get_path( 'movie/sess-normed' + suffix )
+raw_root        = config.get_path('movie/raw' )
+out_root        = config.get_path('movie/sess-normed' + suffix )
 input_dir       = config.get_path('movie/sess-normed' + suffix)	
 sess_idx_dir    = config.get_path('movie/sess-idx'    + suffix)
 sess_concat_dir = config.get_path('movie/sess-concat' + suffix)
@@ -164,8 +164,7 @@ def construct_session(sess, w2idx, RESERVED_TOKENS):
 	return out
 
 
-if False:
-	preprocess_movie(raw_root = raw_root, out_root = out_root)
+preprocess_movie(raw_root = raw_root, out_root = out_root)
 
 w2idx, idx2w, sessions = norm_and_index(RESERVED_TOKENS, input_dir, max_len = 400, vocab_size = vocab_size )
 
@@ -191,7 +190,6 @@ test  = sessions[cut:]
 print('\n\t>> removing existing .npy files')
 shutil.rmtree(sess_idx_dir)
 os.mkdir     (sess_idx_dir)
-
 
 '''
     save output

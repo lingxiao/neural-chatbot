@@ -6,6 +6,7 @@ import numpy as np
 import tensorflow as tf
 import subprocess
 import cPickle
+from app import *
 
 tf.logging.set_verbosity(tf.logging.DEBUG) # test
 
@@ -372,6 +373,7 @@ class Trainer(object):
         # y_batch = np.transpose(np.asarray(y_batch))
 
         return x_batch, y_batch, seq_len
+
 
 
 

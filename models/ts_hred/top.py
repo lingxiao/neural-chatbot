@@ -12,17 +12,9 @@ from models.ts_hred.src.hred.train import Trainer
 
 from app import *
 
-# input_dir       = '/data2/xiao/neural-chatbot-inputs'
-# chkpt_dir       = '/data2/xiao/neural-chatbot-checkpoint'
-
-# root            = '/home/lingxiao/neural-chatbot/model/hred'
-# data_root       = input_dir + '/movie/sess-concat'
-# chkpt_root      = '/data2/xiao/neural-chatbot-checkpoint'
-
-
-root       = get_path('root')
-data_root  = get_path('input')
-chkpt_root = get_path('checkpoint')
+root            = get_path('root')
+data_root       = get_path('input')
+chkpt_root      = get_path('checkpoint')
 
 logs_dir        = os.path.join(root       , 'logs'     )
 checkpoint_file = os.path.join(chkpt_root , 'hred/hred-movie.ckpt')
@@ -38,13 +30,15 @@ eos_symbol    = 4    # end of conversation
 n_buckets     = 20
 max_itter     = 10000000
 
-vocab_size    = 50005
 embedding_dim = 64
 query_dim     = 128
 session_dim   = 256
 batch_size    = 50
-max_length    = 500
+max_length    = 50
 
+vocab_size    = 50005
+
+	
 if __name__ == '__main__':
 
 	with tf.Graph().as_default():

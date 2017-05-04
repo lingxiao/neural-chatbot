@@ -1,4 +1,4 @@
-8############################################################
+############################################################
 # Module  : preprocess phone data  
 # Date    : Febuary 28th
 # Author  : Xiao Ling  
@@ -169,6 +169,7 @@ def fold_gesture(token):
                 to emtpy string
     '''
     if not token: return token
+
     else:
         to  = token[0]
         tl  = token[-1]
