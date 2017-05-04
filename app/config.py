@@ -20,7 +20,6 @@ RESERVED_TOKENS = {'pad'       : '_'
 			      , 'eoc'      : '</c>'    # end of conversation
 			      ,'vocab-size': 50005}
 
-
 ############################################################
 '''
 	System Root

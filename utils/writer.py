@@ -48,8 +48,8 @@ class Writer:
 			else:
 				mode = ' in PRODUCTION mode '
 
-			with open(self.path,'a') as h:
-				self.tell('='*10 + mode + '='*10)
+			# with open(self.path,'a') as h:
+			# 	self.tell('='*10 + mode + '='*10)
 
 
 
@@ -57,8 +57,8 @@ class Writer:
 		if self.console:
 			print('\n' + self.tabs + msg)
 
-		with open(self.path,'a') as h:
-			h.write('\n' + self.tabs + msg)
+		# with open(self.path,'a') as h:
+		# 	h.write('\n' + self.tabs + msg)
 
 
 
