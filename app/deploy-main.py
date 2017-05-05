@@ -164,7 +164,7 @@ def construct_session(sess, w2idx, RESERVED_TOKENS):
 	return out
 
 
-preprocess_movie(raw_root = raw_root, out_root = out_root)
+# preprocess_movie(raw_root = raw_root, out_root = out_root)
 
 w2idx, idx2w, sessions = norm_and_index(RESERVED_TOKENS, input_dir, max_len = max_len, vocab_size = vocab_size )
 

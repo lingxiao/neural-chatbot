@@ -86,11 +86,11 @@ class Trainer(object):
         self.Y = tf.placeholder(tf.int64, shape=(max_length, batch_size))
         self.attention_mask = tf.placeholder(tf.float32, shape=(max_length, batch_size, max_length))
 
-        self.X_sample = tf.placeholder(tf.int64, shape=(batch_size,))
-        self.H_query = tf.placeholder(tf.float32, shape=(None, batch_size, self.hred.query_dim))
-        self.H_session = tf.placeholder(tf.float32, shape=(batch_size, self.hred.session_dim))
-        self.H_decoder = tf.placeholder(tf.float32, shape=(batch_size, self.hred.decoder_dim))
-
+        self.X_sample = tf.placeholder(tf.int64    , shape=(batch_size,))
+        self.H_query = tf.placeholder(tf.float32   , shape=(None, batch_size, self.hred.query_dim))
+        self.H_session = tf.placeholder(tf.float32 , shape=(batch_size, self.hred.session_dim))
+        self.H_decoder = tf.placeholder(tf.float32 , shape=(batch_size, self.hred.decoder_dim))
+  
         self.logits = self.hred.step_through_session(self.X, self.attention_mask)
         self.loss = self.hred.loss(self.X, self.logits, self.Y)
         self.softmax = self.hred.softmax(self.logits)
@@ -146,8 +146,8 @@ class Trainer(object):
 
                     # Accumulative cost, like in hred-qs
                     total_loss_tmp = total_loss + loss_out
-                    n_pred_tmp = n_pred + seq_len * batch_size
-                    cost = total_loss_tmp / n_pred_tmp
+                    n_pred_tmp     = n_pred + seq_len * batch_size
+                    cost           = total_loss_tmp / n_pred_tmp
 
                     print("Step %d - Cost: %f   Loss: %f   Accuracy: %f   Accuracy (no symbols): %f  Length: %d" %
                           (iteration, cost, loss_out, acc_out, accuracy_non_special_symbols_out, seq_len))
@@ -257,16 +257,17 @@ class Trainer(object):
                 feed_dict={self.X: input_x, self.attention_mask: attention_mask}
             )
 
-            current_beam_size = beam_size
+            current_beam_size  = beam_size
             current_hypotheses = []
-            final_hypotheses = []
+            final_hypotheses   = []
 
             # Reverse arg sort (highest prob above)
-            arg_sort = np.argsort(softmax_out, axis=1)[0][::-1]
+            arg_sort   = np.argsort(softmax_out, axis=1)[0][::-1]
             arg_sort_i = 0
 
             # create original current_hypotheses
             while len(current_hypotheses) < current_beam_size:
+
                 # Ignore UNK and EOS (for the first min_queries)
                 while arg_sort[arg_sort_i] == self.hred.unk_symbol or arg_sort[arg_sort_i] == self.hred.eos_symbol:
                     arg_sort_i += 1
@@ -276,7 +277,7 @@ class Trainer(object):
 
                 queries_accepted = 1 if x == self.hred.eoq_symbol else 0
                 result = [x]
-                prob = softmax_out[0][x]
+                prob   = softmax_out[0][x]
                 current_hypotheses += [
                     (prob, x, result, hidden_query, hidden_session, hidden_decoder, queries_accepted)]
 
@@ -356,6 +357,7 @@ class Trainer(object):
             # Save the variables to disk.
             save_path = self.saver.save(sess, self.CHECKPOINT_FILE)
             print("Model saved in file: %s" % save_path)
+
 
     def get_batch(self, train_data):
 
