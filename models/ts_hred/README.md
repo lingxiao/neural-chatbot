@@ -4,9 +4,28 @@ In this project we trained a Hiearchical Recurrent Neural Network from the paper
 
 # DATASET
 
-The open subtitle corpus is commonly used for machine translation, it is composed of movie transcripts between different languages. It has 30 languages with 20,400 files, 150 million tokens and 22 million sentence fragments. We foused on 28 scripts with English subtitles. Originally, we planned to use the CALLHOME corpus (LDC97S42) distributed by the Lingustic Data Constortium. However upon closer examination we noted the overabudance of "hms" from the listener (16% of total utterances) following a long stretch of utterences by the other speaker, 
+The open subtitle corpus is commonly used for machine translation, it is composed of movie transcripts between different languages. It has 30 languages with 20,400 files, 150 million tokens and 22 million sentence fragments. We foused on 28 scripts with English subtitles. Originally, we planned to use the CALLHOME corpus (LDC97S42) distributed by the Lingustic Data Constortium. However upon closer examination we noted the overabudance of "hms" from the listener (16% of total utterances) following a long stretch of utterences by the other speaker. Thus we chose the movie corpus, which does not appear to experience this problem.
 
 # PREPROCESSING
+
+A raw example of a movie script is given below:
+
+In the last century before the birth... of the new faith called Christianity... which was destined to overthrow the pagan tyranny of Rome... and bring about a new society... the Roman republic stood at the very centre of the civilized world.
+"Of all things fairest." sang the poet...
+"first among cities and home of the gods is golden Rome."
+Yet even at the zenith of her pride and power... the Republic lay fatally stricken with a disease called... human slavery.
+The age of the dictator was at hand... waiting in the shadows for the event to bring it forth.
+In that same century... in the conquered Greek province of Thrace... an illiterate slave woman added to her master' s wealth... by giving birth to a son whom she named Spartacus.
+A proud. rebellious son... who was sold to living death in the mines of Libya... before his thirteenth birthday.
+There. under whip and chain and sun... he lived out his youth and his young manhood... dreaming the death of slavery... 2. 000 years before it finally would die.
+Back to work!
+Get up, Spartacus, you Thracian dog!
+Come on, get up!
+My ankle, my ankle!
+My ankle!
+Spartacus again?
+This time he dies.
+Back to work, all of you!
 
 
 
