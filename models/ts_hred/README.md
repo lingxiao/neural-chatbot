@@ -31,17 +31,18 @@ A raw example of a movie script is given below:
 
 Since there are no speakers in this document, so we first added speakers A and B for each paragraph delimited by the new line symbol. This is certainly a crude approach, but while scanning through the labeled documents it appears to appropriately delimit different speakers most of the time. Next we removed ASCII symbols in an adhoc manner, before using a backported version of tworkenizer created by CMU, which:
 
-* stripes white space
-* lower case
-* split off edge punctuation.
+	* stripes white space
+	* lower case
+	* split off edge punctuation.
 
-Note proper nouns and numbers are not folded into on character.
+Note proper nouns and numbers are not folded into on character. The vocabulary is 50,005 characters, this includes 50,000 characters found in corpus, and the special tokens:
 
-See tworkenize.py for a comprehensive list of tokenization steps. 
+	* unk
+	* pad
+	* go
+	* eos - end of sentence
+	* eoc - end of conversation
 
-Finally, we removed any tweet questions-response pairs where the question is longer than 20 tokens, and the question is shorter than 3 tokens or longer than 20 tokens. 
-
-The vocabulary is limited to 6004 characters, all out of vocabulary (OOV) words are mapped to the token 'unk'.
 
 # MODELS
 We used vanilla sequence to sequence model with attention mechanism, following the construction by Vinyals and Kaiser et al. (https://arxiv.org/pdf/1412.7449.pdf). This model was originally designed for machine translation and is trained to maximize the probabilty of target sequence given input sequence, where the cost is cross entropy. The model maps in the input sequence into a hidden vector, where the attention mechanism controls how much hidden information will propogate forward.
