@@ -129,6 +129,7 @@ output: power s. I was attached by blessed. i spent six month in presion because
 </pre>
 
 Again the sentences are grammatical, but the response this example ``appears" less sensible than the previous one.
+All in HRED was able to acquire a langauge model, although its ability to track conversation state is unclear.
 
 
 ## FUTURE WORK ##
