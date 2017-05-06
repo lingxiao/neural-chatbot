@@ -131,7 +131,6 @@ output: power s. I was attached by blessed. i spent six month in presion because
 Again the sentences are grammatical, but the response this example ``appears" less sensible than the previous one.
 All in HRED was able to acquire a langauge model, although its ability to track conversation state is unclear.
 
-
 ## FUTURE WORK ##
 
 The first concern future works must address is acquiring the right kind of data. If the model assumes there is an underlying dynamic that can be learned in conversation, then this underlying dynamic should exist by inspection. One example of a clear dynamic might be a conversation that transfers from greeting, to well defined turns of question answering, followed by a good bye of sorts. This conversation may appear artificial and, in fact, may need to be constructed in a controlled setting. But this approach has the advantage that the dynamic exists by construction, and we can use the results of the model to determine if it is capable of learning this dynamic, given it exists. On the other hand, it is not clear if this dynamic exists in the movie corpus. In fact it is not clear this dynamic exist in the CALLHOME corpus either. 
