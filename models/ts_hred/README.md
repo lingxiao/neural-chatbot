@@ -43,15 +43,48 @@ Note proper nouns and numbers are not folded into on character. The vocabulary i
 	* eos - end of sentence
 	* eoc - end of conversation
 
+And example of the corpus post processing is as follows:
 
-# MODELS
-We used vanilla sequence to sequence model with attention mechanism, following the construction by Vinyals and Kaiser et al. (https://arxiv.org/pdf/1412.7449.pdf). This model was originally designed for machine translation and is trained to maximize the probabilty of target sequence given input sequence, where the cost is cross entropy. The model maps in the input sequence into a hidden vector, where the attention mechanism controls how much hidden information will propogate forward.
+<pre>
+	A: in the last century before the birth of the new faith called christianity which was destined to overthrow the pagan tyranny of rome and bring about a new society the roman republic stood at the very centre of the civilized world
+	B: of all things fairest sang the poet
+	A: first among cities and home of the gods is golden rome
+	B: yet even at the zenith of her pride and power the republic lay fatally stricken with a disease called human slavery
 
-We utilized the orginial "translate.py" in the tensorflow repository written for French-English translation. All functions in the original file have been slightly modified for our twitter chatbot. In total, we trained three different models as follow:
-	- preprocessed with nltk's vanilla tokenization scheme
-	- preprocessed with tworkenize.py
-	- preprocessed with tworkenize.py & early stopping
-The total vocabulary size for both questions and answers is 6004 including the default special vocabulary used in Seq2Seq model (_PAD_, _UNK_, _GO_, _EOS_). We used four buckets with the following bucket sizes (question, answer)-pairs: [(5, 5), (10, 10), (15, 15), (25, 25)].
+	A: the age of the dictator was at hand waiting in the shadows for the event to bring it forth
+	B: in that same century in the conquered greek province of thrace an illiterate slave woman added to her master s wealth by giving birth to a son whom she named spartacus
+	A: a proud rebellious son who was sold to living death in the mines of libya before his thirteenth birthday
+	B: there under whip and chain and sun he lived out his youth and his young manhood dreaming the death of slavery 2 000 years before it finally would die
+
+	A: back to work
+	B: get up spartacus you thracian dog
+	A: come on get up
+	B: my ankle my ankle
+	A: my ankle
+</pre>
+
+
+# MODEL
+
+We used a hiearchical recurrent neural net (HRED) construction found in the paper "A Hierarchical Recurrent Encoder-Decoder for Generative Context-Aware Query Suggestion" by Sordoni, Bengio, Vahabi, Lioma, Simonsen, and Nie. This model assumes the existence of a conversation vector that keeps track of the current state of conversation, and the model will find a representation for this vector, and learn a mapping for this vector across different utterences. Additionally similar to seq-to-seq, HRED learns hidden represenation of words and transition between words within a sentence. Finally, the entire model is trained end-to-end by minimizing entropy of a session, which is composed of multiple rounds of utterances from two speakers.
+
+# TRAINING DETAILS
+
+We divided the training
+
+The sentences in the corpus were restricted to at most 50 tokens long
+
+n_buckets     = 20
+max_itter     = 10000000
+
+embedding_dim = 64
+query_dim     = 128
+session_dim   = 256
+batch_size    = 24
+max_length    = 50
+
+
+
 
 # TEST RESULTS and DISCUSSION 
 We tested each model with the same set of sentences including some sentences in the training data. The results are in the "results" folder. Detailed explanantions are denoted below.
