@@ -10,39 +10,41 @@ The open subtitle corpus is commonly used for machine translation, it is compose
 
 A raw example of a movie script is given below:
 
-In the last century before the birth... of the new faith called Christianity... which was destined to overthrow the pagan tyranny of Rome... and bring about a new society... the Roman republic stood at the very centre of the civilized world.
+<pre>
+	In the last century before the birth... of the new faith called Christianity... which was destined to overthrow the pagan tyranny of Rome... and bring about a new society... the Roman republic stood at the very centre of the civilized world.
 
-"Of all things fairest." sang the poet...
+	"Of all things fairest." sang the poet...
 
-"first among cities and home of the gods is golden Rome." 
+	"first among cities and home of the gods is golden Rome." 
 
-Yet even at the zenith of her pride and power... the Republic lay fatally stricken with a disease called... human slavery.
+	Yet even at the zenith of her pride and power... the Republic lay fatally stricken with a disease called... human slavery.
 
-The age of the dictator was at hand... waiting in the shadows for the event to bring it forth.
+	The age of the dictator was at hand... waiting in the shadows for the event to bring it forth.
 
-In that same century... in the conquered Greek province of Thrace... an illiterate slave woman added to her master' s wealth... by giving birth to a son whom she named Spartacus.
+	In that same century... in the conquered Greek province of Thrace... an illiterate slave woman added to her master' s wealth... by giving birth to a son whom she named Spartacus.
 
-A proud. rebellious son... who was sold to living death in the mines of Libya... before his thirteenth birthday. 
+	A proud. rebellious son... who was sold to living death in the mines of Libya... before his thirteenth birthday. 
 
-There. under whip and chain and sun... he lived out his youth and his young manhood... dreaming the death of slavery... 2. 000 years before it finally would die.
+	There. under whip and chain and sun... he lived out his youth and his young manhood... dreaming the death of slavery... 2. 000 years before it finally would die.
 
-Back to work! 
+	Back to work! 
 
-Get up, Spartacus, you Thracian dog! 
+	Get up, Spartacus, you Thracian dog! 
 
-Come on, get up!
+	Come on, get up!
 
-My ankle, my ankle!
+	My ankle, my ankle!
 
-My ankle! 
+	My ankle! 
 
-Spartacus again? 
+	Spartacus again? 
 
-This time he dies. 
+	This time he dies. 
 
-Back to work, all of you!
+	Back to work, all of you!
+</pre>
 
-
+Since there are no speakers in this document, 
 
 
 We used two tokenization schemes. The first is nltk's vanilla tokenization scheme, which includes:
