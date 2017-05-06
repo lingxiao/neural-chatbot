@@ -12,35 +12,20 @@ A raw example of a movie script is given below:
 
 <pre>
 	In the last century before the birth... of the new faith called Christianity... which was destined to overthrow the pagan tyranny of Rome... and bring about a new society... the Roman republic stood at the very centre of the civilized world.
-
 	"Of all things fairest." sang the poet...
-
 	"first among cities and home of the gods is golden Rome." 
-
 	Yet even at the zenith of her pride and power... the Republic lay fatally stricken with a disease called... human slavery.
-
 	The age of the dictator was at hand... waiting in the shadows for the event to bring it forth.
-
 	In that same century... in the conquered Greek province of Thrace... an illiterate slave woman added to her master' s wealth... by giving birth to a son whom she named Spartacus.
-
 	A proud. rebellious son... who was sold to living death in the mines of Libya... before his thirteenth birthday. 
-
 	There. under whip and chain and sun... he lived out his youth and his young manhood... dreaming the death of slavery... 2. 000 years before it finally would die.
-
 	Back to work! 
-
 	Get up, Spartacus, you Thracian dog! 
-
 	Come on, get up!
-
 	My ankle, my ankle!
-
 	My ankle! 
-
 	Spartacus again? 
-
 	This time he dies. 
-
 	Back to work, all of you!
 </pre>
 
