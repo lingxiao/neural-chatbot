@@ -82,8 +82,8 @@ Note the small batch size is used to accommodate the GPU. The network was traine
 
 
 # TEST RESULTS and DISCUSSION 
-
-The global perplexity and the buckets' perplexities except the first one decreased as the steps increased, but the first bucket's perplexity decreased at the beginning and increased later. In the results, "unk" appears many times, even for the sentences in the training data. We believe this is due insufficient tokenization. Below is an example from the nltk model.
+<!-- 
+The global perplexity and the buckets' perplexities except the first one decreased as the steps increased, but the first bucket's perplexity decreased at the beginning and increased later. In the results, "unk" appears many times, even for the sentences in the training data. We believe this is due insufficient tokenization. Below is an example from the nltk model. -->
 
 <!-- <pre>
 	> Have a great day
