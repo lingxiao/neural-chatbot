@@ -29,23 +29,13 @@ A raw example of a movie script is given below:
 	Back to work, all of you!
 </pre>
 
-Since there are no speakers in this document, 
+Since there are no speakers in this document, so we first added speakers A and B for each paragraph delimited by the new line symbol. This is certainly a crude approach, but while scanning through the labeled documents it appears to appropriately delimit different speakers most of the time. Next we removed ASCII symbols in an adhoc manner, before using a backported version of tworkenizer created by CMU, which:
 
-
-We used two tokenization schemes. The first is nltk's vanilla tokenization scheme, which includes:
-
-* lowercase all tokens
-* removing all non alphanumeric characters.
-
-Note in the last case if a nonalphanumeric character appears inside of a word, then it is removed from the word. For example. Punctuations are not removed.
-
-
-Next we usedd tworkenize found in tworkenize.py, this include:
-
-* stripping white space
-* removing emojis that do not appear consecutively with no space in between
+* stripes white space
 * lower case
-* split off edge punctuation
+* split off edge punctuation.
+
+Note proper nouns and numbers are not folded into on character.
 
 See tworkenize.py for a comprehensive list of tokenization steps. 
 
