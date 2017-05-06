@@ -70,38 +70,22 @@ We used a hiearchical recurrent neural net (HRED) construction found in the pape
 
 # TRAINING DETAILS
 
-We divided the training
-
-The sentences in the corpus were restricted to at most 50 tokens long
-
-n_buckets     = 20
-max_itter     = 10000000
-
-embedding_dim = 64
-query_dim     = 128
-session_dim   = 256
-batch_size    = 24
-max_length    = 50
+Since the HRED code base is implemented so that it cannot handle long sessions and long utterances, we limited the conversation to be at most 50 tokens long, and each session has at most four sentences. The sessions were then divided to 20 buckets, the network parameters were:
 
 
+	* embedding dimension = 64
+	* query dimension     = 128
+	* session dimension   = 256
+	* batch size          = 24
+
+Note the small batch size is used to accommodate the GPU. The network was trained over 72 hours on a GeForce GTX TITAN X gpu.
 
 
 # TEST RESULTS and DISCUSSION 
-We tested each model with the same set of sentences including some sentences in the training data. The results are in the "results" folder. Detailed explanantions are denoted below.
-
-## 1) Preprocessed with NLTK's Vanilla Tokenization scheme
-- learning rate: 0.1
-- The total number of training steps: 107600
-- Perplexity at the stopping point: 
-	- Global: 27.09
-	- Buckets: 122.35, 72.53, 70.51, 87.10
-- Result files:
-	"nltk_107600.txt"
-	"nltk_107600.png" (Just screenshot image)
 
 The global perplexity and the buckets' perplexities except the first one decreased as the steps increased, but the first bucket's perplexity decreased at the beginning and increased later. In the results, "unk" appears many times, even for the sentences in the training data. We believe this is due insufficient tokenization. Below is an example from the nltk model.
 
-<pre>
+<!-- <pre>
 	> Have a great day
 	thank you unk
 	> It is raining today
@@ -147,150 +131,36 @@ The global perplexity and the buckets' perplexities except the first one decreas
 	> my sister say she ready for me
 	lmao yall unk me
 </pre>	
-
-
-## 2) Preprocessed with tworkenize.py
-- learning rate: 0.5
-- The total number of training steps: 128200
-- Perplexity at the stopping point: 
-	- Global: 1.11
-	- Buckets: 2627.52, 16880.32, 43720.34, 24863.28
-- Result files:
-	"tworken_128200.txt"
-	"tworken_128200.png" 
-
-Note total perplexity score over all buckets dropped to as far as 1.11. However, each bucket's perplextiy kept increasing and eventually became very large. Be that as it may, this model performs qualitatively better than the one trained on the previously tokenized dataset. In particular we observe far less "unk" tokens, and the responses appear more related to the question. 
-
-<pre>
-	> Have a great day
-	unk your unk
-	> It is raining today
-	yo unk .
-	> Trump got elected as the president of the united states
-	unk because i heard . so am always unk of the light .
-	> It is finally Friday
-	stay ready b
-	> yeah i'm preparing myself to drop a lot on this man, but definitely need something reliable
-	eh . i saw this unk . good seeing jimmy .
-	> magic's biggest secrets finally revealed on netflix
-	she's a unk in the red store
-	> just standing up for my friends yo
-	i can help her way .
-	> besides if trump say his condolences it won't sound genuine
-	nope . she truly might end his unk .
-	> I am okay with that
-	the best game .
-	> I love my dad
-	i cant wait
-	> I love my mom
-	i love this
-	> she is back
-	unk is bae
-	> idk
-	aw .
-	>  idk im just trying to help other people
-	i'm going attention in the way .
-	> what's a good place to get free beats?
-	like what the unk works
-	> let's work
-	work . thanks
-	> goddamit that degrom image is so good i hope i never lose it
-	what unk help
-	> you are so sweet.
-	thank you dear !!!!!!
-	> couldn't help myself
-	the best answer .
-	> if i'm being totally honest, i went far out of my way for this one
-	you know your unk .
-	> my sister say she ready for me
-	allowed the type
-	> hello
-	the last rapper
-	> whos the last rapper?
-	yeah . unk
-	> you mad bro?
-	yeah my number
-	> I wonder what donald trump did when he was my age
-	i thought it was a bitch .
-	> i agree with that
-	good question .	
-</pre>	
-
-
-## 3) Preprocessed with tworkenize.py & early stopping
-- learning rate: 0.5
-- The total number of training steps: 27000
-- Perplexity at the stopping point:
-	- Global: 25.12
-	- Buckets: 49.00, 48.75, 79.21, 92.70
-- Result files:
-	"tworken_earlystopping_27000.txt"
-	"tworken_earlystopping_27000.png" (Just screenshot image)
-
-Since perplexity is not the best measure of converation cohesiveness, we hypothesized early stopping may yield better results. The global perplexity at the stopping point of this model is higher than the one of the previous model. All buckets' perplexities of this model are much lower than the ones of the previous model. However, this model appear to generate more 'unk' tokens than the previous two models, and qualitatively perform far worse than the others - most of the answers do not make sense.
-
-<pre>
-	> Have a great day
-	what unk unk
-	> It is raining today
-	unk unk unk
-	> Trump got elected as the president of the united states
-	unk unk unk unk unk unk unk unk unk unk unk unk
-	> It is finally Friday
-	that's unk unk
-	> yeah i'm preparing myself to drop a lot on this man, but definitely need something reliable
-	well i was thinking about this one of the unk unk
-	> magic's biggest secrets finally revealed on netflix
-	that's what i was thinking
-	> just standing up for my friends yo
-	thanks unk unk
-	> besides if trump say his condolences it won't sound genuine
-	unk unk unk unk unk unk unk unk unk unk unk
-	> I am okay with that
-	unk unk unk
-	> I love my dad
-	you're so unk
-	> I love my mom
-	my unk unk
-	> she is back
-	unk unk unk
-	> idk
-	unk unk unk
-	> idk im just trying to help other people
-	what i was talking about
-	> what's a good place to get free beats?
-	i unk unk
-	> let's work
-	thanks for unk
-	> goddamit that degrom image is so good i hope i never lose it
-	i can't wait to see unk unk
-	> you are so sweet.
-	thank you unk !
-	> couldn't help myself
-	unk unk unk
-	> if i'm being totally honest, i went far out of my way for this one
-	unk unk unk unk
-	> my sister say she ready for me
-	lol you know she got it
-	> hello
-	unk unk unk
-	> whos the last rapper?
-	unk unk unk
-	> you mad bro?
-	no right bro
-	>  I wonder what donald trump did when he was my age
-	i can't believe he was unk
-	> i agree with that
-	you're right .	
-</pre>	
+ -->
 
 ## FUTURE WORK ##
 
-We can improve this model in several ways. First, tokenization appear to make a significant difference in quality, since it changes the distribution over words. Thus it may be worthwhile to consider tokenization schemes that are more appropriate for this domain. Next, we observed that global perplexity is a better measure of performance (qualitatively measured by conversing with the bot) than that of each bucket's. More importantly, constructing a better measure of response quality may yield further improvements. 
+The first concern future works must address is acquiring the right kind of data. If the model assumes there is an underlying dynamic that can be learned in conversation, then this underlying dynamic should exist by inspection. One example of a clear dynamic might be a conversation that transfers from greeting, to well defined turns of question answering, followed by a good bye of sorts. This conversation may appear artificial and, in fact, may need to be constructed in a controlled setting. But this approach has the advantage that the dynamic exists by construction, and we can use the results of the model to determine if it is capable of learning this dynamic, given it exists. On the other hand, it is not clear if this dynamic exists in the movie corpus. In fact it is not clear this dynamic exist in the CALLHOME corpus either. 
 
-It is interesting to note that when the model gives answers with english words, the sentences are grammatically correct. Thus the model appeared to have acquired a "language model". However, this may not be a great use of our data since there is very little of it. Thus we wonder if it is possible for a model to acquire a language model by pretraining on non-conversational english corpus, and then fine tune the parameters on a conversational data. 
+Assuming this data set exists, then a prudent course of action might actually to reduce the complexity of the model, in particular the aspect that models the conversation dynamic. We might experiment with a simple autoregressive model (read: no nonlinearity) and benchmark HRED against this model. 
 
-Finally, seq-to-seq does not keep a history of previous rounds of conversation. In homework 4, we will extend the model by learning to keep a reprentaton of the history of conversation, and training the model on a dataset where such long term correlation exists. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
