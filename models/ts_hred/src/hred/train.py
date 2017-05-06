@@ -150,7 +150,7 @@ class Trainer(object):
                     cost           = total_loss_tmp / n_pred_tmp
 
                     print("Step %d - Cost: %f   Loss: %f   Accuracy: %f   Accuracy (no symbols): %f  Length: %d" %
-                          (iteration, cost, loss_out, acc_out, accuracy_non_special_symbols_out, seq_len))
+                         (iteration, cost, loss_out, acc_out, accuracy_non_special_symbols_out, seq_len))
 
                 else:
                     loss_out, _ = tf_sess.run(
