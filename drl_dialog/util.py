@@ -69,7 +69,7 @@ def basic_tokenizer(sentence):
 	return [w for w in words if w]
 
 
-def sentence_to_token_ids(sentence, vocab, tokenizer = None, normalize_digits = True):
+def sentence_to_token_ids(sentence, vocab_w2idx, vocab_idx2w, tokenizer = None, normalize_digits = True):
 
 	"""Convert a string to a list of integers representing token-ids.
 
@@ -81,10 +81,10 @@ def sentence_to_token_ids(sentence, vocab, tokenizer = None, normalize_digits = 
 		words = basic_tokenizer(sentence)
 
 	if not normalize_digits:
-		return [vocab.get(w,UNK_ID) for w in words]
+		return [vocab_w2idx.get(w,UNK_ID) for w in words]
 
 	# Normalize digits by 0 before looking words up in the vocab
-	return [vocab.get(_DIGIT_RE.sub(b"0",w), UNK_ID) for w in words]
+	return refine_words([vocab_w2idx.get(_DIGIT_RE.sub(b"0",w), UNK_ID) for w in words], vocab_w2idx, vocab_idx2w)
 
 def refine_words(sentence_ids, w2idx, idx2w):
 	negatives = ['haven','hasn','hadn','wouldn','shouldn','mustn','couldn','didn','don','doesn','isn','aren','wasn','weren']

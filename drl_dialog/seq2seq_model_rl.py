@@ -116,7 +116,6 @@ class Seq2SeqModel(object):
 		if forward_only:
 			self.outputs, self.losses = tf.contrib.legacy_seq2seq.model_with_buckets(self.encoder_inputs, self.decoder_inputs, targets, 
 	  		self.target_weights, buckets, lambda x,y:seq2seq_f(x,y,True),softmax_loss_function=softmax_loss_function)
-
 			if output_projection is not None:
 				for b in xrange(len(buckets)):
 					self.outputs[b] = [tf.matmul(output, output_projection[0]) + output_projection[1] for output in self.outputs[b]]
@@ -224,6 +223,7 @@ class Seq2SeqModel(object):
 		3) Add Go to decoder
 
 		"""
+		
 		for _ in xrange(self.batch_size):
 			encoder_i, decoder_i = random.choice(data[bucket_id])
 			encoder_i = encoder_i + [util.PAD_ID]*(encoder_size - len(encoder_i))
@@ -252,7 +252,6 @@ class Seq2SeqModel(object):
 					batch_weight[batch_idx] = 0.0
 
 			batch_weights.append(batch_weight)
-		pdb.set_trace()
 		return batch_encoder_inputs, batch_decoder_inputs, batch_weights
 
 

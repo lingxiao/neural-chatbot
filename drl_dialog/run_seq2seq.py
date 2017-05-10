@@ -71,42 +71,13 @@ else:
 	_buckets = [(80,40),(160,80)]
 	ckpt_name = "seq2seq.ckpt"
 
-def read_data(data_path, max_size = None):
+def read_data(data_path, w2idx, idx2w, max_size = None):
 	data_set = [[] for _ in _buckets]
-	w2idx =  pickle.load(open(os.path.join(FLAGS.data_dir,"w2idx.pkl"),"rb"))
-	idx2w =  pickle.load(open(os.path.join(FLAGS.data_dir,"idx2w.pkl"),"rb"))
 
 	for f_name in os.listdir(data_path):
 		dialogue = np.ndarray.tolist(np.load(os.path.join(data_path, f_name)))
 		for k in xrange(len(dialogue)-2):
-			"""
-			HERE FOR REMOVING BAD TOKENS
-			source_ids = []
-			target_ids = []
-			for i in xrange(len(dialogue[k])):
-				if i == 0 or i == len(dialogue[k]): # Assume that it wouldn't start with 'i>' or finish with '<i'
-					if not(dialogue[k][i] in util.removing_ids):
-						source_ids.append(dialogue[k][i])
-				else:
-					if not(dialogue[k][i] in util.removing_ids) and not(dialogue[k][i]==6 and (dialogue[k][i+1] ==95 or dialogue[k][i-1]==94)):
-						source_ids.append(dialogue[k][i])
-
-			for i in xrange(len(dialogue[k+1])):
-				if i == 0 or i == len(dialogue[k+1]): # Assume that it wouldn't start with 'i>' or finish with '<i'
-					if not(dialogue[k+1][i] in util.removing_ids):
-						source_ids.append(dialogue[k+1][i])
-				else:
-					if not(dialogue[k+1][i] in util.removing_ids) and not(dialogue[k+1][i]==6 and (dialogue[k+1][i+1] ==95 or dialogue[k+1][i-1]==94)):
-						source_ids.append(dialogue[k+1][i])
-
-			for i in xrange(len(dialogue[k+2])):
-				if i == 0 or i == len(dialogue[k+2]): # Assume that it wouldn't start with 'i>' or finish with '<i'
-					if not(dialogue[k+2][i] in util.removing_ids):
-						target_ids.append(dialogue[k+2][i])
-				else:
-					if not(dialogue[k+2][i] in util.removing_ids) and not(dialogue[k+2][i]==6 and (dialogue[k+2][i+1] ==95 or dialogue[k+2][i-1]==94)):
-						target_ids.append(dialogue[k+2][i])
-			"""
+		
 			source_ids = [x for x in dialogue[k] if not(x in util.removing_ids)] + [x for x in dialogue[k+1] if not(x in util.removing_ids)]
 			source_ids = util.refine_words(source_ids, w2idx, idx2w)
 			target_ids = [x for x in dialogue[k+2] if not(x in util.removing_ids)]
@@ -119,7 +90,7 @@ def read_data(data_path, max_size = None):
 					break		
 	return data_set
 
-def read_data_backward(data_path, max_size = None):
+def read_data_backward(data_path, w2idx, idx2w, max_size = None):
 	data_set = [[] for _ in _buckets]
 
 	for f_name in os.listdir(data_path):
@@ -127,7 +98,9 @@ def read_data_backward(data_path, max_size = None):
 		print("======== reading data ======== file: "+f_name)
 		for k in xrange(len(dialogue)-1):
 			source_ids = [x for x in dialogue[k+1] if not(x in util.removing_ids)]
+			source_ids = util.refine_words(source_ids, w2idx, idx2w)
 			target_ids = [x for x in dialogue[k] if not(x in util.removing_ids)]
+			target_ids = util.refine_words(target_ids, w2idx, idx2w)
 			target_ids.append(util.EOS_ID)
 
 			for bucket_id, (source_size, target_size) in enumerate(_buckets):
@@ -171,13 +144,15 @@ def train():
 
 		print ("Reading development and training data (limit: %d)."
            % FLAGS.max_train_data_size)
+		w2idx =  pickle.load(open(os.path.join(FLAGS.data_dir,"w2idx.pkl"),"rb"))
+		idx2w =  pickle.load(open(os.path.join(FLAGS.data_dir,"idx2w.pkl"),"rb"))
 
 		if FLAGS.backward:
-			train_set = read_data_backward(os.path.join(FLAGS.data_dir,"train"),FLAGS.max_train_data_size)
-			dev_set = read_data_backward(os.path.join(FLAGS.data_dir,"dev"))
+			train_set = read_data_backward(os.path.join(FLAGS.data_dir,"train"), w2idx, idx2w, FLAGS.max_train_data_size)
+			dev_set = read_data_backward(os.path.join(FLAGS.data_dir,"dev"), w2idx, idx2w)
 		else:
-			train_set = read_data(os.path.join(FLAGS.data_dir,"train"),FLAGS.max_train_data_size)
-			dev_set = read_data(os.path.join(FLAGS.data_dir,"dev"))
+			train_set = read_data(os.path.join(FLAGS.data_dir,"train"),w2idx, idx2w,FLAGS.max_train_data_size)
+			dev_set = read_data(os.path.join(FLAGS.data_dir,"dev"), w2idx, idx2w)
 		train_bucket_sizes = [len(train_set[b]) for b in xrange(len(_buckets))]
 		train_total_size = float(sum(train_bucket_sizes))
 
@@ -246,7 +221,7 @@ def decode():
 		sentence = sys.stdin.readline()
 
 		while sentence:
-			token_ids = util.sentence_to_token_ids(tf.compat.as_bytes(sentence),w2idx)
+			token_ids = util.sentence_to_token_ids(tf.compat.as_bytes(sentence),w2idx,idx2w)
 			#bucket_id = 0
 			bucket_id = min([b for b in xrange(len(_buckets)) if _buckets[b][0] > len(token_ids)])
 

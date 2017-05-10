@@ -1,0 +1,2 @@
+Context {minimum | echo}
+Context {this is the maximum length of the sample utterances which is twenty words as same as our tensorflow training model| echo}

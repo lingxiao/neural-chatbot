@@ -1,0 +1,16 @@
+{
+  "intents": [
+    {
+      "slots": [
+        {
+          "name": "echo",
+          "type": "AMAZON.LITERAL"
+        }
+      ],
+      "intent": "Context"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    }
+  ]
+}
