@@ -1,0 +1,53 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Ilya~Sutskever}{2014}]{Sutskever}
+Ilya~Sutskever, Oriol~Vinyals, Q. V.~L.
+\newblock 2014.
+\newblock Sequence to sequence learning with neural networks.
+\newblock In {\em Advances in neural information processing systems},
+  3104--3112.
+\newblock Association for Computational Linguistics.
+
+\bibitem[\protect\citeauthoryear{Li}{2016}]{Li}
+Li, J.
+\newblock 2016.
+\newblock Deep reinforcement learning for dialogue generation.
+\newblock In {\em Proceedings of the 2016 Conference on Empirical Methods in
+  Natural Language Processing},  1192--1202.
+\newblock Association for Computational Linguistics.
+
+\bibitem[\protect\citeauthoryear{Marc' Aurelio~Ranzato}{2016}]{Ranzato}
+Marc' Aurelio~Ranzato, Sumit~Chopra, M.~A.
+\newblock 2016.
+\newblock Sequence level training with recurrent neural networks.
+\newblock In {\em International Conference on Learning Representations}.
+
+\bibitem[\protect\citeauthoryear{Serban}{2015}]{Serban}
+Serban, I.~V.
+\newblock 2015.
+\newblock Building end-to-end dialogue systems using generative hierarchical
+  neural network models.
+\newblock In {\em Association for the Advancement of Artificial Intelligence}.
+
+\bibitem[\protect\citeauthoryear{Sordoni}{2015}]{Sordoni}
+Sordoni, A.
+\newblock 2015.
+\newblock A hierarchical recurrent encoder-decoder for generative context-aware
+  query suggestion.
+\newblock In {\em Conference of Information Knowledge and Management}.
+
+\bibitem[\protect\citeauthoryear{Vinyals and Le}{2015}]{Vinyals}
+Vinyals, O., and Le, Q.~V.
+\newblock 2015.
+\newblock A neural conversational model.
+\newblock In {\em Proceedings of the 31st International Conference on Machine
+  Learning}.
+
+\bibitem[\protect\citeauthoryear{Williams}{1992}]{Williams}
+Williams, R.~J.
+\newblock 1992.
+\newblock Simple statistical gradient-following algorithms for connectionist
+  reinforcement learning.
+\newblock {\em Machine Learning} 8(3-4):229--256.
+
+\end{thebibliography}
