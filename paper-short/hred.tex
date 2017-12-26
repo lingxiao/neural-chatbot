@@ -1,0 +1,2 @@
+\section{HRED}
+HRED is a generative model that learns a probability distribution over the set of all possible dialogues of arbitrary lengths. Specifically, HRED assumes the probability of the current word is a function of both previous words in the utterance, and previous utterances in the session. This multiscale long term dependency is captured by an utterance level RNN that encodes sentences into hidden vectors, and a dialogue level RNN that updates this vector throughout the session. 
